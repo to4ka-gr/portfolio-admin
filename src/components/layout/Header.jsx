@@ -1,4 +1,11 @@
+'use client';
+
 import Link from 'next/link';
+import dynamic from 'next/dynamic';
+
+const ThemeToggle = dynamic(() => import('@/components/ui/ThemeToggle'), {
+  ssr: false,
+});
 
 const nav = [
   { href: '/', label: 'Главная' },
@@ -9,9 +16,12 @@ const nav = [
 
 export default function Header() {
   return (
-    <header className="border-b">
+    <header className="border-b border-border bg-background">
       <div className="mx-auto flex max-w-5xl items-center justify-between px-4 py-4">
-        <Link href="/" className="font-semibold tracking-tight">
+        <Link
+          href="/"
+          className="font-semibold tracking-tight text-foreground focus:outline-none focus:ring-2 focus:ring-border rounded"
+        >
           to4ka-gr
         </Link>
 
@@ -21,7 +31,7 @@ export default function Header() {
               <li key={item.href}>
                 <Link
                   href={item.href}
-                  className="text-sm text-black/80 hover:text-black focus:outline-none focus:ring-2 focus:ring-black/30 rounded"
+                  className="text-sm text-muted-foreground hover:text-foreground focus:outline-none focus:ring-2 focus:ring-border rounded"
                 >
                   {item.label}
                 </Link>
@@ -30,12 +40,15 @@ export default function Header() {
           </ul>
         </nav>
 
-        <Link
-          href="/admin"
-          className="text-sm font-medium underline underline-offset-4 hover:no-underline focus:outline-none focus:ring-2 focus:ring-black/30 rounded"
-        >
-          Войти
-        </Link>
+        <div className="flex items-center gap-4">
+          <ThemeToggle />
+          <Link
+            href="/admin"
+            className="text-sm font-medium underline underline-offset-4 text-foreground hover:no-underline focus:outline-none focus:ring-2 focus:ring-border rounded"
+          >
+            Войти
+          </Link>
+        </div>
       </div>
     </header>
   );
